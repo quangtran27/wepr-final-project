@@ -74,11 +74,8 @@
           <div class="card">
             <form class="card-body" method="post" action="update-profile" enctype="multipart/form-data">
               <div class="row mb-3">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Username</h6>
-                </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" id="user-name" name="username" disabled value="${userLogged.username}">
+                  <input type="hidden" class="form-control" id="user-name" name="username" disabled value="${userLogged.username}">
                 </div>
               </div>
               <div class="row mb-3">

@@ -84,7 +84,7 @@
           </div>
           <div class="row mb-3">
             <div class="col-sm-3">
-              <h6 class="mb-0">Old password</h6>
+              <h6 class="mb-0">Present password</h6>
             </div>
             <div class="col-sm-9 text-secondary">
               <input type="password" class="form-control" id="password-old" name="password-old">

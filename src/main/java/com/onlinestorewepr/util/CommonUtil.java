@@ -16,5 +16,7 @@ public class CommonUtil {
   public static void deleteDir(String path) throws IOException {
     Path existedImagePath = Paths.get(path);
     Files.deleteIfExists(existedImagePath);
+
+    // Files.deleteIfExists(Paths.get(product.getImage()))
   }
 }

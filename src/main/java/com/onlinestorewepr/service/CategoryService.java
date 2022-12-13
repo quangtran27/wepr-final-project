@@ -39,13 +39,12 @@ public class CategoryService {
   public void AddCategory() throws ServletException, IOException {
     String messageBody, messageType;
     String name = req.getParameter("name").trim();
-    String description = req.getParameter("description").trim();
 
-    if (!name.isEmpty() && !description.isEmpty()) {
+    if (!name.isEmpty()) {
       // Check if a category with the same name already exists in DB
       if (categoryDAO.findByName(name) == null) {
         try {
-          Category category = new Category(name, description);
+          Category category = new Category(name);
           categoryDAO.insert(category);
           messageBody = "A new category was created successfully!";
           messageType = "success";
@@ -83,14 +82,12 @@ public class CategoryService {
     String messageBody = "", messageType = "";
     int id = req.getParameter("id") == null ? 0 : Integer.parseInt(req.getParameter("id"));
     String name = req.getParameter("name").trim();
-    String description = req.getParameter("description").trim();
 
-    if (id != 0 && !name.isEmpty() && !description.isEmpty()) {
+    if (id != 0 && !name.isEmpty()) {
       Category category = categoryDAO.get(id);
       if (category != null) {
         try {
           category.setName(name);
-          category.setDescription(description);
           categoryDAO.update(category);
           messageBody = "Category's info was changed successfully!";
           messageType = "success";
@@ -116,7 +113,7 @@ public class CategoryService {
   }
 
   public void DeleteCategory() throws ServletException, IOException {
-    String messageBody = "", messageType = "";
+    String messageBody, messageType;
     int id = Integer.parseInt(req.getParameter("id"));
     if (id != 0) {
       Category category = categoryDAO.get(id);

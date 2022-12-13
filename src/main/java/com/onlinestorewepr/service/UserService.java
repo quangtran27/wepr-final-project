@@ -3,7 +3,9 @@ package com.onlinestorewepr.service;
 import com.onlinestorewepr.dao.OrderDAO;
 import com.onlinestorewepr.dao.OrderItemDAO;
 import com.onlinestorewepr.dao.ProductDAO;
+import com.onlinestorewepr.dao.CartDAO;
 import com.onlinestorewepr.dao.UserDAO;
+import com.onlinestorewepr.entity.Cart;
 import com.onlinestorewepr.entity.User;
 import com.onlinestorewepr.util.CommonUtil;
 import com.onlinestorewepr.util.MessageUtil;
@@ -214,6 +216,11 @@ public class UserService {
             userNew.setPhone(phone);
             userNew.setEmail(email);
             userDAO.insert(userNew);
+
+            Cart cart = new Cart();
+            new CartDAO().insert(cart);
+            userNew.setCart(cart);
+            userDAO.update(userNew);
 
             //Inform success in form
             message= "Create success! Sign in to get started";

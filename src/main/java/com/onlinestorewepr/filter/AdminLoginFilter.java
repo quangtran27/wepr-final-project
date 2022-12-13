@@ -16,16 +16,14 @@ public class AdminLoginFilter extends HttpFilter implements Filter {
 //    private static final String[] loginRequireURLs = {"web/profile","web/update-profile"};
 
     @Override
-    protected void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) resp;
+    protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession session = request.getSession();
         Object obj = session.getAttribute("adminLogged");
         if(obj!=null){
             chain.doFilter(request,response);
         }
         else {
-            resp.sendRedirect("/login-admin");
+            response.sendRedirect("/login-admin");
         }
     }
 

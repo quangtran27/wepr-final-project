@@ -42,57 +42,62 @@
                         <!-- Account -->
                         <div class="card-body">
                            <div class="d-flex align-items-center align-items-sm-center gap-4">
-                           <img
-                              src="./assets/img/avatars/1.png"
-                              alt="user-avatar"
-                              class="d-block rounded"
-                              height="100"
-                              width="100"
-                              id="uploadedAvatar"
-                           />
-                           <div class="button-wrapper">
-                              <label for="upload" class="btn btn-primary me-2" tabindex="0">
-                                 <span class="d-none d-sm-block">Upload new photo</span>
-                                 <i class="bx bx-upload d-block d-sm-none"></i>
-                                 <input
-                                 type="file"
-                                 id="upload"
-                                 class="account-file-input"
-                                 hidden
-                                 accept="image/png, image/jpeg"
-                                 />
-                              </label>
-                              <button type="button" class="btn btn-outline-secondary account-image-reset">
-                                 <i class="bx bx-reset d-block d-sm-none"></i>
-                                 <span class="d-none d-sm-block">Reset</span>
-                              </button>
-                           </div>
-                           </div>
-                        </div>
+
                         <hr class="my-0" />
                         <div class="card-body">
-                           <form>
+                           <form method="post" action="update-admin-profile" enctype="multipart/form-data">
                            <div class="row mb-3">
-                              <label class="col-sm-2 col-form-label" for="basic-default-name">Display name</label>
+                              <label class="col-sm-2 col-form-label">Display name</label>
                               <div class="col-sm-10">
-                                 <input type="text" class="form-control" id="" value="Admin" placeholder="Display name" />
+                                 <input type="text" class="form-control" id="admin-name" name="name" value="${adminLogged.name}">
+                              </div>
+                           </div>
+                               <div class="row mb-3">
+                                   <label class="col-sm-3 col-form-label" for="image">Choose image</label>
+                                   <div class="col-sm-9">
+                                       <input
+                                               accept="image/png, image/gif, image/jpeg"
+                                               class="form-control"
+                                               id="image"
+                                               name="image"
+                                               type="file"
+                                       />
+                                       <img
+                                       <%--              alt="Preview Product Image"--%>
+                                               class="img-thumbnail mt-3"
+                                               id="preview-img"
+                                               style="width: 200px;"
+                                               src="${pageContext.request.contextPath}/${adminLogged.image}"
+                                       >
+                                   </div>
+                               </div>
+                           <div class="row mb-3">
+<%--                              <label class="col-sm-2 col-form-label" for="">Username</label>--%>
+                              <div class="col-sm-10">
+                                 <input type="hidden" class="form-control" id="user-name" name="username" value="${adminLogged.username}">
                               </div>
                            </div>
                            <div class="row mb-3">
-                              <label class="col-sm-2 col-form-label" for="">Username</label>
+                              <label class="col-sm-2 col-form-label">Phone</label>
                               <div class="col-sm-10">
-                                 <span class="form-control">admin</span>
+                                 <input type="text" class="form-control" id="phone" name="phone" value="${adminLogged.phone}">
                               </div>
                            </div>
                            <div class="row mb-3">
-                              <label class="col-sm-2 col-form-label" for="basic-default-name">Password</label>
+                              <label class="col-sm-2 col-form-label">Gender</label>
                               <div class="col-sm-10">
-                                 <input type="password" class="form-control" id="basic-default-name" value="12345" placeholder="Password" />
+                                 <input type="text" class="form-control" id="admin-sex" name="sex" value="${adminLogged.gender}">
                               </div>
                            </div>
+                              <div class="row mb-3">
+                                 <label class="col-sm-2 col-form-label">Address</label>
+                                 <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="admin-address" name="address" value="${adminLogged.address}">
+                                 </div>
+                              </div>
                            <div class="row justify-content-end">
                               <div class="col-sm-10" style="text-align: end;">
-                                 <button type="submit" class="btn btn-primary me-3">SAVE</button>
+                                 <button type="submit" class="btn btn-primary me-3">SAVE CHANGE</button>
                               </div>
                            </div>
                            </form>

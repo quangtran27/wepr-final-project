@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+         isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -33,18 +34,18 @@
 
   <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/core.css" type="text/css">
   <style>
-     .linkA:hover {
-        color: red;
-     }
+    .linkA:hover {
+      color: red;
+    }
 
-     .details {
-        display: none;
-     }
+    .details {
+      display: none;
+    }
 
-     .btn-arrow:hover {
-        cursor: pointer;
-        color: blue;
-     }
+    .btn-arrow:hover {
+      cursor: pointer;
+      color: blue;
+    }
   </style>
 </head>
 
@@ -151,22 +152,23 @@
         </div>
       </div>
     </div>
+
     <!--  Hiển thị đơn hàng đã mua -->
     <div class="row">
       <div class="container mt-5">
         <div class="d-flex justify-content-center row">
           <div class="col-md-10">
             <div class="card">
-              <h5 class="card-header">Tất cả đơn hàng</h5>
+              <h5 class="card-header">List of orders</h5>
               <div class="table-responsive table-borderless">
                 <table class="table">
                   <thead>
                   <tr>
-                    <th>Tên người nhận</th>
-                    <th>Địa chỉ</th>
-                    <th>Trạng thái</th>
-                    <th>Thành tiền</th>
-                    <th>Ngày đặt hàng</th>
+                    <th>Recipient's name</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Order date</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -180,47 +182,48 @@
                     <td>${order.address}</td>
                     <td><c:choose>
                       <c:when
-                          test="${order.status =='Đã hủy đơn'}">
-																<span class="badge bg-label-success me-1"
-                                      style="color: #ed1c24 !important;">Đã hủy đơn</span>
+                              test="${order.status =='Created'}">
+                                                                  <span class="badge bg-label-success me-1"
+                                                                        style="color: #ed1c24 !important;">Created</span>
                       </c:when>
                       <c:when
-                          test="${order.status =='Đã xác nhận'}">
-																<span class="badge bg-label-success me-1"
-                                      style="color: orange !important;"> Đã giao cho đơn
-																	vị vận chuyển </span>
+                              test="${order.status =='Paid'}">
+                                                                  <span class="badge bg-label-success me-1"
+                                                                        style="color: orange !important;">Paid</span>
                       </c:when>
                       <c:when
-                          test="${order.status =='Đang giao hàng'}">
-																<span class="badge bg-label-success me-1"
-                                      style="color: sandybrown !important;">Đang giao hàng</span>
+                              test="${order.status =='Delivering'}">
+                                                                  <span class="badge bg-label-success me-1"
+                                                                        style="color: sandybrown !important;">Delivering</span>
                       </c:when>
-                      <c:when test="${order.status =='Giao hàng thành công'}">
-                        <span class="badge bg-label-success me-1">Đã nhận hàng</span>
+                      <c:when test="${order.status =='Delivered'}">
+                        <span class="badge bg-label-success me-1">Delivered</span>
                       </c:when>
-                      <c:when test="${order.status =='Giao hàng không thành công'}">
-																<span class="badge bg-label-success me-1"
-                                      style="color: red !important;text-decoration-line: line-through;">Giao hàng không thành công</span>
+                      <c:when test="${order.status =='Cancelled'}">
+                                                                  <span class="badge bg-label-success me-1"
+                                                                        style="color: red !important;text-decoration-line: line-through;">Cancelled</span>
                       </c:when>
                       <c:otherwise>
 																<span class="badge bg-label-success me-1"
-                                      style="color: orange !important;">Chờ xác nhận</span>
+                                                                      style="color: orange !important;">Chờ xác nhận</span>
                       </c:otherwise>
                     </c:choose></td>
                     <c:choose>
-                      <c:when test="${order.total == 0}">
-                        <td>Chưa thanh toán!</td>
+                      <c:when test="${order.payment == false}">
+                        <td>Unpaid!</td>
                       </c:when>
                       <c:otherwise>
                         <td>${order.total}</td>
                       </c:otherwise>
                     </c:choose>
                     <td>${order.created}</td>
-                    <td><c:choose>
-                      <c:when test="${order.status ==''}">
-                      <a href="${pageContext.request.contextPath}/web/cancelOrder?orderId=${order.id}"
-                         class="linkA">Hủy đơn hàng</a></td>
-                    </c:when>  </c:choose>
+                    <td>
+                      <c:choose>
+                        <c:when test="${order.status =='Created'}">
+                        <a href="${pageContext.request.contextPath}/cancelOrder?orderId=${order.id}"
+                           class="linkA">Cancel order</a></td>
+                        </c:when>
+                      </c:choose>
                     <td><i class="btn-arrow arrow_triangle-down_alt2"
                            onclick="show(${order.id})" style="font-size: 20px;"></i></td>
                     <td><i class="btn-arrow arrow_triangle-up_alt2"
@@ -233,10 +236,10 @@
                   <thead id="${order.id}" class="details">
                   <tr>
                     <th></th>
-                    <th>Sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Tổng tiền</th>
+                    <th>Product name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
                   </tr>
                   </thead>
 
@@ -250,7 +253,7 @@
                                src="<c:out value="${product.image}"/>"
                                style="width: 50px;"></td>
                       <td style="width: 210px"><c:out
-                          value="${product.name}" /></td>
+                              value="${product.name}" /></td>
                       <td><c:out value="${product.price}" /></td>
                       <td>${item.quantity}</td>
                       <td>${item.price*item.quantity}</td>
@@ -293,6 +296,18 @@
 <!-- Active menu -->
 <script>
   document.getElementById('menu-contact').classList.add('active')
+</script>
+<script>
+  function show(id)
+  {
+    document.getElementById(id).style.display = 'table-header-group';
+    document.getElementById("body-"+id).style.display = 'table-row-group';
+  }
+  function hide(id)
+  {
+    document.getElementById(id).style.display = 'none';
+    document.getElementById("body-"+id).style.display = 'none';
+  }
 </script>
 
 <!-- Js Plugins -->

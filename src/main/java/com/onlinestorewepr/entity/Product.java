@@ -15,6 +15,7 @@ public class Product {
    private String description;
    private Double price;
    private int quantity;
+   private int sold;
    private Double discount;
    private String size;
    private String color;
@@ -50,18 +51,18 @@ public class Product {
    @OneToMany(mappedBy = "product")
    private List<OrderItem> orderItems;
 
-
-   public Product(String name, String image, String description, Double price, int quantity, Double discount, String size, String color, String brand, boolean status, Category category) {
+   public Product(String name, String image, String description, Double price, int quantity, Double discount, String size, String color, String brand, boolean available, Category category) {
       this.name = name;
+      this.image = image;
       this.description = description;
       this.price = price;
       this.quantity = quantity;
+      this.sold = 0;
       this.discount = discount;
-      this.image = image;
       this.size = size;
       this.color = color;
       this.brand = brand;
-      this.available = status;
+      this.available = available;
       this.category = category;
    }
 
@@ -115,6 +116,14 @@ public class Product {
 
    public void setQuantity(int quantity) {
       this.quantity = quantity;
+   }
+
+   public int getSold() {
+      return sold;
+   }
+
+   public void setSold(int sold) {
+      this.sold = sold;
    }
 
    public Double getDiscount() {

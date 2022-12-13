@@ -139,6 +139,7 @@ public class UserOrderService {
             orderItemDAO.update(orderItem);
             Product product = orderItem.getProduct();
             product.setQuantity(product.getQuantity() - orderItem.getQuantity());
+            product.setSold(product.getSold() + 1);
             productDAO.update(product);
           }
 

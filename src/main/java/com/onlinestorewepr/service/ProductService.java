@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService {
@@ -252,6 +253,7 @@ public class ProductService {
       Product product = new Product();
       Part part = req.getPart("image");
       readData(product);
+      product.setSold(0);
       if (product.isPropertiesValid()) {
         try {
           // Save image

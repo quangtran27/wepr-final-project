@@ -179,9 +179,9 @@
           <c:forEach items="${products}" var="l">
             <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="product__item">
-                <div class="product__item__pic set-bg" <%--data-setbg="${l.image}"--%>>
-                  <a href="shop-details?id=${l.id}&CategoryID=${l.category.id}">
-                    <img src="${pageContext.request.contextPath}/${l.image}" alt="product-image">
+                <div class="product__item__pic set-bg" style="display: flex; justify-content: center" <%--data-setbg="${l.image}"--%>>
+                  <a href="shop-details?id=${l.id}&CategoryID=${l.category.id}" style="text-align: center">
+                    <img  style="height: 100%;" src="${pageContext.request.contextPath}/${l.image}" alt="product-image">
                   </a>
                 </div>
                 <div class="product__item__text">

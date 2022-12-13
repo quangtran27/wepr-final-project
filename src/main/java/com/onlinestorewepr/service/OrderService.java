@@ -56,12 +56,14 @@ public class OrderService {
         if(status.equals("Cancelled")){
             List getListOrderItem = orderDAO.getListOrderItem(idOrder);
             for(int i=0; i<getListOrderItem.size(); i++) {
+
                 OrderItem row = (OrderItem) getListOrderItem.get(i);
                 int quantity = row.getProduct().getQuantity()+ row.getQuantity();
 
                 int productId = row.getProduct().getId();
                 Product product = productDAO.get(productId);
                 product.setQuantity(quantity);
+                product.setSold(product.getSold() - 1);
                 productDAO.update(product);
             }
         }

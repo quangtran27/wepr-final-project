@@ -140,13 +140,13 @@ public class ProductDAO {
 
          if (price != 0) {
             if (price == 1){
-               HQL = HQL + " and c.price <= 100000";
+               HQL = HQL + " and c.price <= 100";
             }
             else if(price == 2){
-               HQL = HQL + " and c.price >= 100000 and c.price <= 200000";
+               HQL = HQL + " and c.price >= 100 and c.price <= 200";
             }
             else {
-               HQL = HQL + " and c.price >= 200000";
+               HQL = HQL + " and c.price >= 200";
             }
          }
 
@@ -220,11 +220,11 @@ public class ProductDAO {
    }
 
    public List<Product> getNewArrivals() {
-      List<Product> products = null;
+      List<Product> products = new ArrayList<>();
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          String HQL = "FROM  Product c order by c.id desc";
-         Query query = session.createQuery(HQL);
-         products = query.setMaxResults(8).getResultList();
+         Query query = session.createQuery(HQL).setMaxResults(8);
+         products = query.getResultList();
       } catch (Exception e) {
          e.printStackTrace();
       }
@@ -254,14 +254,15 @@ public class ProductDAO {
       return products;
    }
 
-    public static void main(String[] args) {
-     ProductDAO donHangDAO = new ProductDAO();
-
-     List<Product> products = donHangDAO.filterProduct(0,"",0,"",1);
-     System.out.println(products.size());
-     for (Product p : products) {
-        System.out.println(p.getPrice());
-     }
-  }
-
+   public List<Product> getBestsellersProducts() {
+      List<Product> products = new ArrayList<>();
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         String HQL = "SELECT p FROM Product p ORDER BY p.sold DESC";
+         Query query = session.createQuery(HQL).setMaxResults(8);
+         products = query.getResultList();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return products;
+   }
 }

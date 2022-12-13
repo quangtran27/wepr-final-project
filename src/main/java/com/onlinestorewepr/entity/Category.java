@@ -8,11 +8,8 @@ import java.util.List;
 public class Category {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column
    private int id;
-   @Column
    private String name;
-   @Column
    private String description;
 
    public Category() {

@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartItemService {
@@ -37,27 +38,26 @@ public class CartItemService {
 
             Product product = productService.getProduct(productID);
             Cart cart = user.getCart();
-            if (cart == null) {
-                CartDAO cartDAO = new CartDAO();
-                Cart newCart = new Cart();
-                newCart.setUser(user);
-                cartDAO.insert(newCart);
-                cart = cartDAO.getAll().get(cartDAO.getAll().size() - 1);
-            }
 
             if (quantity > 0 && quantity <= product.getQuantity()) {
+                // Cart had product(s)
                 if (cart.getCartItems().size() > 0) {
+                    boolean isExisted = false;
                     for (CartItem c : cart.getCartItems()) {
+                        // Cart already has this product
                         if (c.getProduct().getId() == productID) {
                             c.setQuantity(c.getQuantity() + quantity);
                             cartItemDAO.update(c);
+                            isExisted = true;
                             break;
-                        } else {
-                            CartItem cartItem = new CartItem(cart, product, quantity);
-                            cartItemdao.insert(cartItem);
                         }
                     }
+                    if (!isExisted) {
+                        CartItem cartItem = new CartItem(cart, product, quantity);
+                        cartItemdao.insert(cartItem);
+                    }
                 }
+                // Cart is empty
                 else {
                     CartItem cartItem = new CartItem(cart, product, quantity);
                     cartItemdao.insert(cartItem);
@@ -76,13 +76,6 @@ public class CartItemService {
         if (loggedUser != null) {
             User user = new UserDAO().get(loggedUser.getUsername());
             Cart cart = user.getCart();
-            if (cart == null) {
-                CartDAO cartDAO = new CartDAO();
-                Cart newCart = new Cart();
-                newCart.setUser(user);
-                cartDAO.insert(newCart);
-                cart = cartDAO.getAll().get(cartDAO.getAll().size() - 1);
-            }
 
             List<CartItem> cartItems = cart.getCartItems();
             String message = req.getParameter("message");

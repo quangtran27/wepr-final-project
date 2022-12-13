@@ -7,11 +7,8 @@ import javax.persistence.*;
 public class OrderItem {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column
    private int id;
-   @Column
    private Double price;
-   @Column
    private int quantity;
 
    @ManyToOne(fetch = FetchType.LAZY)

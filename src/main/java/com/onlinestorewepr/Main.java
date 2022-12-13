@@ -11,19 +11,12 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) {
-    User user = new UserDAO().get("quangtv");
-    System.out.println("Username: " + user.getName());
-    List<CartItem> cartItems = user.getCart().getCartItems();
+    User user = new UserDAO().get("admin");
+    if (user == null) {
+      user = new User("admin", "admin", true, "Admin");
+      new UserDAO().insert(user);
+    }
 
-    if (cartItems.size() > 0) {
-      for (int i = 0; i < cartItems.size(); i++) {
-        System.out.println("Cart item line " + i);
-        System.out.println("Product name: " + cartItems.get(i).getProduct().getName());
-        System.out.println("Product quantity: " + cartItems.get(i).getQuantity());
-      }
-    }
-    else {
-      System.out.println("Cart items is empty");
-    }
+    System.out.println("Username: " + user.getName());
   }
 }

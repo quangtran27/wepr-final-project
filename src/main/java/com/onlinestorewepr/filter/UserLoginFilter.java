@@ -16,19 +16,16 @@ public class UserLoginFilter extends HttpFilter implements Filter {
 //    private static final String[] loginRequireURLs = {"web/profile","web/update-profile"};
 
     @Override
-    protected void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest request =  req;
-        HttpServletResponse response = resp;
+    protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession session = request.getSession();
         Object obj = session.getAttribute("userLogged");
         if(obj!=null){
             chain.doFilter(request,response);
         }
         else {
-            request.getRequestDispatcher("/web/authentication.jsp").forward(request,response);
+            response.sendRedirect("/login");
         }
     }
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }

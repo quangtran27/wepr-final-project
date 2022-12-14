@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -254,15 +255,42 @@ public class ProductDAO {
       return products;
    }
 
-   public List<Product> getBestsellersProducts() {
-      List<Product> products = new ArrayList<>();
+    public static void main(String[] args) {
+     ProductDAO donHangDAO = new ProductDAO();
+
+     List<Product> products = donHangDAO.filterProduct(0,"",0,"",1);
+     System.out.println(products.size());
+     for (Product p : products) {
+        System.out.println(p.getPrice());
+     }
+  }
+   public Product getProductsByOrderItem(Product pr) {
+      Product product = new Product();
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-         String HQL = "SELECT p FROM Product p ORDER BY p.sold DESC";
-         Query query = session.createQuery(HQL).setMaxResults(8);
-         products = query.getResultList();
+         session.beginTransaction();
+         CriteriaBuilder builder = session.getCriteriaBuilder();
+         CriteriaQuery<Product> query = builder.createQuery(Product.class);
+         Root<Product> root = query.from(Product.class); // FROM User u
+         query.select(root); // SELECT
+         query.where(builder.equal(root.get("id"), pr.getId())); // WHERE u.id = 1
+         product = session.createQuery(query).uniqueResult();
+
+         session.getTransaction().commit();
+
       } catch (Exception e) {
          e.printStackTrace();
       }
-      return products;
+      return product;
    }
+   public List<Product> getBestsellersProducts() {
+         List<Product> products = new ArrayList<>();
+         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String HQL = "SELECT p FROM Product p ORDER BY p.sold DESC";
+            Query query = session.createQuery(HQL).setMaxResults(8);
+            products = query.getResultList();
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
+         return products;
+      }
 }

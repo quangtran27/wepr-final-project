@@ -99,4 +99,21 @@ public class OrderService {
         request.setAttribute("orderItemList", orderItemList);
         request.setAttribute("order", order);
     }
+    public void updateOrderStatus(int id,String status) {
+        OrderDAO orderDAO = new OrderDAO();
+        Order order = orderDAO.get(id);
+        String message = "", messageType = "";
+        if (order != null) {
+            try {
+                if (!status.isEmpty())
+                    order.setStatus(status);
+                orderDAO.update(order);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            message = String.format("Order with id %s does not exist", id);
+            messageType = "danger";
+        }
+    }
 }
